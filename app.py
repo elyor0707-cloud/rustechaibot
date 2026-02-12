@@ -29,7 +29,13 @@ def ask_openai(user_message):
         json=data
     )
 
-    return response.json()["choices"][0]["message"]["content"]
+    result = response.json()
+
+    if "choices" not in result:
+        return f"OpenAI error: {result}"
+
+    return result["choices"][0]["message"]["content"]
+
 
 @app.route("/", methods=["GET"])
 def home():
