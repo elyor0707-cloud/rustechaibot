@@ -38,6 +38,13 @@ def home():
 @app.route("/", methods=["POST"])
 def webhook():
     data = request.json
+
+    if "message" not in data:
+        return "ok"
+
+    if "text" not in data["message"]:
+        return "ok"
+
     message = data["message"]["text"]
     chat_id = data["message"]["chat"]["id"]
 
@@ -49,6 +56,7 @@ def webhook():
     )
 
     return "ok"
+
 
 if __name__ == "__main__":
     app.run()
